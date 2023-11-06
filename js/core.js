@@ -48,7 +48,7 @@ function init() {
     //scene.add(cube);
     
     const gltfLoader = new GLTFLoader();
-    const url = '../DonutEx.gltf';
+    const url = '../Donut.js';
     
     
     gltfLoader.load(url,
@@ -64,16 +64,11 @@ function init() {
         },
         // called while loading is progressing
         function ( xhr ) {
-            console.log(xhr.loaded);
-            console.log(xhr.total);
-            console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-    
+            console.log( ( xhr.loaded ) + '% loaded' );
         },
         // called when loading has errors
         function ( error ) {
-    
             console.log( 'An error happened' );
-    
         }
     );
 
