@@ -4,8 +4,8 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 var mouseX = 0, mouseY = 0;
 var windowHalfX = window.innerWidth / 2;
-// var windowHalfY = window.innerHeight / 2;
-var windowHalfY = 300;
+var windowHalfY = window.innerHeight / 2;
+// var windowHalfY = 300;
 var camera, scene, renderer, geometry, material, mesh;
 
 function init() {
@@ -21,7 +21,7 @@ function init() {
 
     var SHADOW_MAP_WIDTH = 2048, SHADOW_MAP_HEIGHT = 1024;
 
-    var ambient = new THREE.AmbientLight( 0xffffff );
+    var ambient = new THREE.AmbientLight( 0xffffff, 3 );
     scene.add(ambient);
     
     const light = new THREE.PointLight( 0xffffff, 1 );
