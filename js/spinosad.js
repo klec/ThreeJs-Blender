@@ -4,7 +4,8 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 var mouseX = 0, mouseY = 0;
 var windowHalfX = window.innerWidth / 2;
-var windowHalfY = window.innerHeight / 2;
+// var windowHalfY = window.innerHeight / 2;
+var windowHalfY = 300;
 var camera, scene, renderer, geometry, material, mesh;
 
 function init() {
@@ -13,18 +14,22 @@ function init() {
     
     scene = new THREE.Scene();
 
-    camera = new THREE.PerspectiveCamera(15, window.innerWidth / window.innerHeight, 0.1, 2000);
-    camera.position.x = 2.9844;
-    camera.position.y = 2.0544;
-    camera.position.z = 2.7973;
+    camera = new THREE.PerspectiveCamera(1, window.innerWidth / window.innerHeight, 0.1, 2000);
+    camera.position.x = 600;
+    camera.position.y = 110;
+    camera.position.z = 0;
 
     var SHADOW_MAP_WIDTH = 2048, SHADOW_MAP_HEIGHT = 1024;
 
-    // var ambient = new THREE.AmbientLight( 0xa0a0a0 );
-    // scene.add( ambient );
+    var ambient = new THREE.AmbientLight( 0xffffff );
+    scene.add(ambient);
+    
+    const light = new THREE.PointLight( 0xffffff, 1 );
+    light.position.set( 2, 1, 0.06 );
+    scene.add( light );
 
     // var light  = new THREE.SpotLight( 0xffeedd, 1 );
-    // light.position.set( -300, 300, 210 );
+    // light.position.set( 300, 30, 10 );
     // light.target.position.set( 10, 40, 20 );
     // light.castShadow = true;
 
@@ -32,23 +37,18 @@ function init() {
     // light.shadowCameraFar = 2500;
     // light.shadowCameraFov = 50;
 
-    // //light.shadowCameraVisible = true;
+    // light.shadowCameraVisible = true;
 
     // light.shadowBias = 0.000001;
     // light.shadowDarkness = 0.5;
 
     // light.shadowMapWidth = SHADOW_MAP_WIDTH;
     // light.shadowMapHeight = SHADOW_MAP_HEIGHT;
-    // //scene.add(light);
-    
-    var cube_geom = new THREE.BoxGeometry(100,100,100);
-    var cube = new THREE.Mesh(cube_geom, new THREE.MeshLambertMaterial({color:0xaabbcc}));
-    cube.receiveShadow = true;
-    cube.castShadow = true;
-    //scene.add(cube);
+    // scene.add(light);
     
     const gltfLoader = new GLTFLoader();
-    const url = '../Donut.js';
+    // const url = '../models/5Boxes.gltf';
+    const url = '../models/spinosad.glb';
     
     
     gltfLoader.load(url,
@@ -71,11 +71,11 @@ function init() {
             console.log( 'An error happened' );
         }
     );
-
+    
     renderer = new THREE.WebGLRenderer({antialias:true});
-    renderer.shadows = true;
-    renderer.shadowType = 1;
-    renderer.shadowMap.enabled = true;
+    //renderer.shadows = true;
+    //renderer.shadowType = 1;
+    //renderer.shadowMap.enabled = true;
     renderer.setClearColor(0xffffff, 0);
     renderer.setSize( window.innerWidth, window.innerHeight );
     container.appendChild( renderer.domElement );
@@ -87,16 +87,16 @@ function init() {
 }
 function onDocumentMouseMove( event ) {
 
-    mouseX = ( event.clientX - windowHalfX ) / 6;
-    mouseY = ( event.clientY - windowHalfY ) / 6;
+    mouseX = ( event.clientX - windowHalfX ) / 1;
+    mouseY = ( event.clientY - windowHalfY ) / 3;
 
 }
 function animate() {
 
     // Include examples/js/RequestAnimationFrame.js for cross-browser compatibility.
     requestAnimationFrame( animate );
-    camera.position.x += ( mouseX - camera.position.x ) * .003;
-    camera.position.y += ( - mouseY - camera.position.y ) * .005;
+    camera.position.z += ( mouseX - camera.position.z ) * .03;
+    camera.position.y += ( - mouseY - camera.position.y ) * .05;
     camera.lookAt( scene.position );
     renderer.render( scene, camera );
 }
